@@ -1,4 +1,4 @@
-﻿@model dynamic
+﻿@model AI_proj.Models.UploadImageModel
 
 @{
     ViewBag.Title = "Neural Classifier";
@@ -16,10 +16,10 @@
             {
                 <img id="image_preview" src="@Url.Content("~/Content/default-placeholder.png")" alt="Image preview" />
                 <div class="form-group">
-                    @*@Html.LabelFor(model => model.ImageData, new { @class = "control-label col-md-2" })*@
+                    @Html.LabelFor(model => model.File.FileName, new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         <input name="Image" type="file" id="image_input"/>
-                        @*@Html.ValidationMessageFor(model => model.ImageData)*@
+                        @Html.ValidationMessageFor(model => model.File)
                     </div>
                 </div>
                 <div class="form-group">
@@ -29,6 +29,7 @@
                 </div>
                 </div>
             }
+
         </div>
     </div>
     <div class="col-sm-6" id="output-container">
