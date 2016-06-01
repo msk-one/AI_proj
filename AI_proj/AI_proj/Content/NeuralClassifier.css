@@ -1,0 +1,16 @@
+﻿#output-wrapper {
+    border-radius: 5px;
+    background-color: rgba(240, 20, 10, 0.3);
+}
+#image_preview {
+    
+    width: 70%;
+    height: auto;
+    display:block;
+    margin: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+input {
+    margin-top: 15px;
+}

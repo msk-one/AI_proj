@@ -101,7 +101,7 @@ namespace AI_proj.NeuralNetwork
             sb.AppendLine("-1");
             //sb.AppendLine("-1 1");
             //sb.AppendLine("1");
-            File.WriteAllText(@"C:\Users\Adam\Documents\AIProj\xor.data", sb.ToString());
+            File.WriteAllText(@"..\..\xor.data", sb.ToString());
         }
         public static void Test(NeuralNet net, double a, double b)
         {
