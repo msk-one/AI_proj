@@ -30,16 +30,16 @@ namespace AI_proj.NeuralNetwork
 
             create_training_file();
 
-            TrainingData data = new TrainingData(@"C:\Users\Adam\Documents\AIProj\xor.data");
+            //TrainingData data = new TrainingData(@"C:\Users\Adam\Documents\AIProj\xor.data");
 
-            net.TrainOnData(data, 500000, 1000, 0.0f);
+            //net.TrainOnData(data, 500000, 1000, 0.0f);
             
             //net.Test(new double[] { 0, 0 }, new double[] { 0 });
             //net.Test(new double[] { 0, 1 }, new double[] { 1 });
             //net.Test(new double[] { 1, 0 }, new double[] { 1 });
             //net.Test(new double[] { 1, 1 }, new double[] { 0 });
 
-            net.Save(@"C:\Users\Adam\Documents\AIProj\xor_learned.net");
+            //net.Save(@"C:\Users\Adam\Documents\AIProj\xor_learned.net");
 
             return net;
         }
@@ -101,7 +101,7 @@ namespace AI_proj.NeuralNetwork
             sb.AppendLine("-1");
             //sb.AppendLine("-1 1");
             //sb.AppendLine("1");
-            File.WriteAllText(@"..\..\xor.data", sb.ToString());
+            //File.WriteAllText(@"..\..\xor.data", sb.ToString());
         }
         public static void Test(NeuralNet net, double a, double b)
         {
