@@ -30,9 +30,9 @@ namespace AI_proj.NeuralNetwork
 
             create_training_file();
 
-            //TrainingData data = new TrainingData(@"C:\Users\Adam\Documents\AIProj\xor.data");
+            TrainingData data = new TrainingData(@"C:\Users\Adam\Documents\AIProj\xor.data");
 
-            //net.TrainOnData(data, 500000, 1000, 0.0f);
+            net.TrainOnData(data, 500000, 1000, 0.0f);
             
             //net.Test(new double[] { 0, 0 }, new double[] { 0 });
             //net.Test(new double[] { 0, 1 }, new double[] { 1 });
@@ -78,15 +78,19 @@ namespace AI_proj.NeuralNetwork
 
             sb.AppendLine("0 1");
             sb.AppendLine("-1");
+
             sb.AppendLine("0 0");
             sb.AppendLine("0");
+
             sb.AppendLine("0 -1");
             sb.AppendLine("1");
 
             sb.AppendLine("5 1");
             sb.AppendLine("1");
+
             sb.AppendLine("100 20");
             sb.AppendLine("1");
+
             sb.AppendLine("39 -21");
             sb.AppendLine("1");
 
