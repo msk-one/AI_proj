@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AI_proj.NeuralNetwork;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FANNCSharp.Double;
 
 namespace NetworkTests
 {
@@ -23,37 +24,38 @@ namespace NetworkTests
         public void RecognizeDigit()
         {
             var testDigits = DigitImage.LoadDigitsWithLabelsFromFile(
-                    @"C:\Users\Adam\Documents\Visual Studio 2015\Projects\AI_proj\charset\t10k-images.idx3-ubyte",
-                    @"C:\Users\Adam\Documents\Visual Studio 2015\Projects\AI_proj\charset\t10k-labels.idx1-ubyte", 30);
+                    @"C:\Users\Piotr\Source\t10k-images.idx3-ubyte",
+                    @"C:\Users\Piotr\Source\t10k-labels.idx1-ubyte", 30);
             var inputDigit1 = testDigits[0];
             var inputDigit2 = testDigits[1];
             var inputDigit3 = testDigits[2];
             var inputDigit4 = testDigits[3];
             var digitNetwork = new DigitNeuralNetwork();
-            digitNetwork.CreateTestingFile(@"C:\Users\Adam\Documents\Visual Studio 2015\Projects\AI_proj\charset\train-images.idx3-ubyte",
-                    @"C:\Users\Adam\Documents\Visual Studio 2015\Projects\AI_proj\charset\train-labels.idx1-ubyte",
-                    @"C:\Users\Adam\Documents\Visual Studio 2015\Projects\AI_proj\charset\testfile", 60000);
+            digitNetwork.CreateTestingFile(@"C:\Users\Piotr\Source\train-images.idx3-ubyte",
+                    @"C:\Users\Piotr\Source\train-labels.idx1-ubyte",
+                    @"C:\Users\Piotr\Source\testfile", 1200);
 
             var net = digitNetwork.GetNetwork();
 
             var inputNumberImage = inputDigit1.GetInputData();
+            net.TrainOnFile(@"C:\Users\Piotr\Source\testfile", 1200, 0, 0.0001f);
             var n = net.Run(inputNumberImage);
             var n2 = net.Run(inputDigit2.GetInputData());
             var n3 = net.Run(inputDigit3.GetInputData());
             var n4 = net.Run(inputDigit4.GetInputData());
            
             Console.WriteLine("Actual: "+inputDigit1.label +" "+ inputDigit2.label +" "+ inputDigit3.label+" " + inputDigit4.label);
-            for (int i = 0; i < n.Length; i++)
+            /*for (int i = 0; i < n.Length; i++)
             {
                 n[i] = Math.Abs(n[i]);
                 n2[i] = Math.Abs(n2[i]);
                 n3[i] = Math.Abs(n3[i]);
                 n4[i] = Math.Abs(n4[i]);
-            }
+            }*/
             Console.WriteLine("For 1st result:");
             for (int i = 0; i < n.Length; i++)
             {
-                if (n[i] == n.Min())
+                if (n[i] > 0.9)
                 {
                     Console.WriteLine(i + "; " + n[i] + "  <----");
                 }

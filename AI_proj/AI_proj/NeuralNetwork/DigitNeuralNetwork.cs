@@ -32,12 +32,12 @@ namespace AI_proj.NeuralNetwork
         //}
         public DigitNeuralNetwork()
         {
-            digitNet = new NeuralNet(NetworkType.LAYER, new List<uint> {28*28, 100, 10})
+            digitNet = new NeuralNet(NetworkType.LAYER, new List<uint> {28*28, 300, 10})
             {
                 ActivationFunctionHidden = ActivationFunction.SIGMOID_SYMMETRIC,
                 ActivationFunctionOutput = ActivationFunction.SIGMOID_SYMMETRIC
             };
-            digitNet.LearningRate = 0.01f;
+            digitNet.LearningRate = 0.001f;
             digitNet.LearningMomentum = 0.9f;
         }
 
@@ -45,7 +45,7 @@ namespace AI_proj.NeuralNetwork
         {
             var digits = DigitImage.LoadDigitsWithLabelsFromFile(inputImagesPath, inputLabelsPath, numLoad);
             StringBuilder builder = new StringBuilder();
-            builder.AppendLine(numLoad + " 784 1");
+            builder.AppendLine(numLoad + " 784 10");
             foreach (var digit in digits)
             {
                 builder.AppendLine(digit.GetTrainingSample());

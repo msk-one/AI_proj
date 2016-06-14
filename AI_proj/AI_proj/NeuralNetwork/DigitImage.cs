@@ -35,7 +35,7 @@ namespace AI_proj.NeuralNetwork
                 for (int j = 0; j < pixels.Length; j++)
                 {
                     //ret[i*28 + j] = Math.Round((double)pixels[i][j]/255-0.5, 2);
-                    ret[i*28 + j] = pixels[i][j];
+                    ret[i * 28 + j] = pixels[i][j];
                 }
             }
             return ret;
@@ -96,6 +96,10 @@ namespace AI_proj.NeuralNetwork
 
         public string GetTrainingSample()
         {
+            System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+            customCulture.NumberFormat.NumberDecimalSeparator = ".";
+
+            System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
             var builder = new StringBuilder();
 
             for (int i = 0; i < pixels.Length; i++)
@@ -104,11 +108,20 @@ namespace AI_proj.NeuralNetwork
                 {
                     //double ret = Math.Round((double) pixels[i][j]/255 - 0.5d, 2); //normalize to range -0.5,0.5
                     //builder.Append(ret.ToString("f2") + " ");
+                    //builder.Append(((pixels[i][j]/128f) - 1f).ToString() + " ");
                     builder.Append(pixels[i][j] + " ");
                 }
             }
             builder.Append("\n");
-            builder.Append(""+label);
+            for(int i=0; i<10; i++)
+            {
+                if (this.label == i)
+                    builder.Append("1");
+                else
+                    builder.Append("-1");
+                if (i != 9)
+                    builder.Append(" ");
+            }
             return builder.ToString();
         }
         public override string ToString()
