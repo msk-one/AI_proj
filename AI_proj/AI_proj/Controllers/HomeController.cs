@@ -24,13 +24,6 @@ namespace AI_proj.Controllers
         {
             ViewBag.Message = "Your application description page.";
 
-            Console.WriteLine("XOR");
-            NeuralNet xornet = XOR.get_xor_net();
-            XOR.Test(xornet, 0, 0);
-            XOR.Test(xornet, 0, 1);
-            XOR.Test(xornet, 1, 0);
-            XOR.Test(xornet, 1, 1);
-
             return View();
         }
 
