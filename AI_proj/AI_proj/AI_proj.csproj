@@ -196,6 +196,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\canvasHandler.js" />
     <Content Include="Content\ImagePreview.js" />
     <Content Include="Content\NeuralClassifier.css" />
     <Content Include="favicon.ico" />
