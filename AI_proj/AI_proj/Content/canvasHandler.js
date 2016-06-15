@@ -5,8 +5,8 @@ var paint;
 
 var canvasDiv = document.getElementById('canvasDiv');
 canvas = document.createElement('canvas');
-canvas.setAttribute('width', 500);
-canvas.setAttribute('height', 500);
+canvas.setAttribute('width', 280);
+canvas.setAttribute('height', 280);
 canvas.setAttribute('id', 'canvas');
 canvasDiv.appendChild(canvas);
 if (typeof G_vmlCanvasManager != 'undefined') {
