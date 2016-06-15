@@ -74,12 +74,41 @@ namespace AI_proj.Controllers
                 }
             }
             var newPixels = ImageCutter.CutImage(pixels);
-            StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < newPixels.GetLength(0); i++)
+            newPixels = ImageCutter.MakeSquare(newPixels);
+   
+
+            //OD TAD JEST NIEUDANE SKALOWANIE
+            
+            bitmap = new Bitmap(newPixels.Length, newPixels.Length, PixelFormat.Format24bppRgb);
+            for (int i = 0; i < newPixels.Length; i++)
             {
-                for (int j = 0; j < newPixels[0].Length; j++)
+                for (int j = 0; j < newPixels.Length; j++)
                 {
-                    if (newPixels[i][j] == 0)
+                    byte val = (byte)(255 - newPixels[i][j]);
+                    var c = Color.FromArgb(val, val, val);
+                    bitmap.SetPixel(i,j, c);
+                }
+            }
+           bitmap.Save(@"C:\Users\Adam\Source\Repos\AI_proj\AI_proj\AI_proj\App_Data\test1.png");
+            Bitmap scaledBitmap = new Bitmap(bitmap, 28,28);
+            scaledBitmap.Save(@"C:\Users\Adam\Source\Repos\AI_proj\AI_proj\AI_proj\App_Data\test.png");
+            byte[][] scaledPixels = new byte[28][];
+            for (int i = 0; i < 28; i++)
+            {
+                scaledPixels[i] = new byte[28];
+                for (int j = 0; j < 28; j++)
+                {
+                    var p = scaledBitmap.GetPixel(i, j);
+                    scaledPixels[i][j] = p.A;
+                }
+            }
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine(scaledPixels.Length + " " + scaledPixels[0].Length);
+            for (int i = 0; i < scaledPixels.GetLength(0); i++)
+            {
+                for (int j = 0; j < scaledPixels[0].Length; j++)
+                {
+                    if (scaledPixels[i][j] == 0)
                     {
                         builder.Append('_');
                     }
@@ -90,8 +119,9 @@ namespace AI_proj.Controllers
                 }
                 builder.Append("\n");
             }
-            NeuralNet network = new NeuralNet(Server.MapPath(@"~/App_Data/digit_neuralnet"));
-           // var output = network.Run(new double[] {1});
+          // NeuralNet network = new NeuralNet(Server.MapPath(@"~/App_Data/digit_neuralnet"));
+           // DigitImage digit = new DigitImage(pixels, 255);
+            //var output = network.Run(new double[] {1});
             var output = new double[] {1, 0, 0, 0, 0, 0, 0, 0, 0, 0};
             List<int> ret = new List<int>();
             for (int i = 0; i < 10; i++)
@@ -101,7 +131,8 @@ namespace AI_proj.Controllers
                     ret.Add(i);
                 }
             }
-            DigitImage digit = new DigitImage(pixels, 255);
+            
+            
             return Json(builder.ToString());
         }
 
