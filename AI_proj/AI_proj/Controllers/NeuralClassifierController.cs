@@ -84,14 +84,14 @@ namespace AI_proj.Controllers
             {
                 for (int j = 0; j < newPixels.Length; j++)
                 {
-                    byte val = (byte)(255 - newPixels[i][j]);
+                    byte val =(byte)(newPixels[i][j]);
                     var c = Color.FromArgb(val, val, val);
                     bitmap.SetPixel(i,j, c);
                 }
             }
-           bitmap.Save(@"C:\Users\Adam\Source\Repos\AI_proj\AI_proj\AI_proj\App_Data\test1.png");
+          // bitmap.Save(@"C:\Users\Adam\Source\Repos\AI_proj\AI_proj\AI_proj\App_Data\test1.png");
             Bitmap scaledBitmap = new Bitmap(bitmap, 28,28);
-            scaledBitmap.Save(@"C:\Users\Adam\Source\Repos\AI_proj\AI_proj\AI_proj\App_Data\test.png");
+            //scaledBitmap.Save(@"C:\Users\Adam\Source\Repos\AI_proj\AI_proj\AI_proj\App_Data\test.png");
             byte[][] scaledPixels = new byte[28][];
             for (int i = 0; i < 28; i++)
             {
@@ -99,30 +99,30 @@ namespace AI_proj.Controllers
                 for (int j = 0; j < 28; j++)
                 {
                     var p = scaledBitmap.GetPixel(i, j);
-                    scaledPixels[i][j] = p.A;
+                    scaledPixels[i][j] = p.R;
                 }
             }
-            StringBuilder builder = new StringBuilder();
-            builder.AppendLine(scaledPixels.Length + " " + scaledPixels[0].Length);
-            for (int i = 0; i < scaledPixels.GetLength(0); i++)
-            {
-                for (int j = 0; j < scaledPixels[0].Length; j++)
-                {
-                    if (scaledPixels[i][j] == 0)
-                    {
-                        builder.Append('_');
-                    }
-                    else
-                    {
-                        builder.Append('O');
-                    }
-                }
-                builder.Append("\n");
-            }
-          // NeuralNet network = new NeuralNet(Server.MapPath(@"~/App_Data/digit_neuralnet"));
-           // DigitImage digit = new DigitImage(pixels, 255);
-            //var output = network.Run(new double[] {1});
-            var output = new double[] {1, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+            //StringBuilder builder = new StringBuilder();
+            //builder.AppendLine(scaledPixels.Length + " " + scaledPixels[0].Length);
+            //for (int i = 0; i < scaledPixels.GetLength(0); i++)
+            //{
+            //    for (int j = 0; j < scaledPixels[0].Length; j++)
+            //    {
+            //        if (scaledPixels[i][j] == 0)
+            //        {
+            //            builder.Append('_');
+            //        }
+            //        else
+            //        {
+            //            builder.Append('O');
+            //        }
+            //    }
+            //    builder.Append("\n");
+            //}
+          NeuralNet network = new NeuralNet(Server.MapPath(@"~/App_Data/digit_neuralnet"));
+           DigitImage digit = new DigitImage(scaledPixels, 255);
+            var output = network.Run(digit.GetInputData());
+            //var output = new double[] {1, 0, 0, 0, 0, 0, 0, 0, 0, 0};
             List<int> ret = new List<int>();
             for (int i = 0; i < 10; i++)
             {
@@ -131,9 +131,7 @@ namespace AI_proj.Controllers
                     ret.Add(i);
                 }
             }
-            
-            
-            return Json(builder.ToString());
+            return Json(ret.ToArray());
         }
 
         Bitmap CreateImage(Bitmap original, int x, int y, int width, int height)
