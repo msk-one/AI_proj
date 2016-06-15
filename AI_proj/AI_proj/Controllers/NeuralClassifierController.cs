@@ -78,20 +78,17 @@ namespace AI_proj.Controllers
    
 
             //OD TAD JEST NIEUDANE SKALOWANIE
-            
             bitmap = new Bitmap(newPixels.Length, newPixels.Length, PixelFormat.Format24bppRgb);
             for (int i = 0; i < newPixels.Length; i++)
             {
                 for (int j = 0; j < newPixels.Length; j++)
                 {
-                    byte val =(byte)(newPixels[i][j]);
+                    byte val =newPixels[i][j];
                     var c = Color.FromArgb(val, val, val);
                     bitmap.SetPixel(i,j, c);
                 }
             }
-          // bitmap.Save(@"C:\Users\Adam\Source\Repos\AI_proj\AI_proj\AI_proj\App_Data\test1.png");
             Bitmap scaledBitmap = new Bitmap(bitmap, 28,28);
-            //scaledBitmap.Save(@"C:\Users\Adam\Source\Repos\AI_proj\AI_proj\AI_proj\App_Data\test.png");
             byte[][] scaledPixels = new byte[28][];
             for (int i = 0; i < 28; i++)
             {
@@ -121,8 +118,18 @@ namespace AI_proj.Controllers
             //}
           NeuralNet network = new NeuralNet(Server.MapPath(@"~/App_Data/digit_neuralnet"));
            DigitImage digit = new DigitImage(scaledPixels, 255);
+            Debug.Write('{');
+            for (int i = 0; i < digit.pixels.Length; i++)
+            {
+                Debug.Write('{');
+                for (int j = 0; j < digit.pixels.Length; j++)
+                {
+                    Debug.Write(digit.pixels[i][j] + ", ");
+                }
+                Debug.Write("},");
+            }
+            Debug.Write('}');
             var output = network.Run(digit.GetInputData());
-            //var output = new double[] {1, 0, 0, 0, 0, 0, 0, 0, 0, 0};
             List<int> ret = new List<int>();
             for (int i = 0; i < 10; i++)
             {
@@ -131,6 +138,7 @@ namespace AI_proj.Controllers
                     ret.Add(i);
                 }
             }
+            Debug.WriteLine(digit.ToString());
             return Json(ret.ToArray());
         }
 

@@ -175,7 +175,6 @@ namespace NetworkTests
             var n2 = net.Run(inputDigit2.GetInputData());
             var n3 = net.Run(inputDigit3.GetInputData());
             var n4 = net.Run(inputDigit4.GetInputData());
-
             Console.WriteLine("For 1st result:");
             for (int i = 0; i < n.Length; i++)
             {
