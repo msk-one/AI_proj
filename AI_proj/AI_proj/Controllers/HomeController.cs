@@ -24,7 +24,7 @@ namespace AI_proj.Controllers
         {
             ViewBag.Message = "Your application description page.";
 
-            return View();
+            return RedirectToAction("Index", "NeuralClassifier");
         }
 
         public ActionResult Contact()
