@@ -27,6 +27,69 @@ namespace AI_proj.NeuralNetwork
             this.label = label;
         }
 
+        public int[] GetValuesHistogram()
+        {
+            int[] ret = new int[256];
+            for (int i = 0; i < 28; i++)
+                for (int j = 0; j < 28; j++)
+                    ret[pixels[i][j]]++;
+            return ret;
+        }
+
+        public List<int> GetSizeOfEmptyBorders()
+        {
+            var ret = new int[4];
+            for (int i = 0; i < 28; i++)
+            {
+                bool empty = true;
+                for (int j = 0; j < 28; j++)
+                    if (pixels[i][j] != 0)
+                        empty = false;
+                if (!empty)
+                {
+                    ret[0] = i;
+                    break;
+                }
+            }
+            for (int i = 0; i < 28; i++)
+            {
+                bool empty = true;
+                for (int j = 0; j < 28; j++)
+                    if (pixels[j][i] != 0)
+                        empty = false;
+                if (!empty)
+                {
+                    ret[1] = i;
+                    break;
+                }
+            }
+            for (int i = 27; i >= 0; i--)
+            {
+                bool empty = true;
+                for (int j = 0; j < 28; j++)
+                    if (pixels[i][j] != 0)
+                        empty = false;
+                if (!empty)
+                {
+                    ret[2] = 27-i;
+                    break;
+                }
+            }
+            for (int i = 27; i >= 0; i--)
+            {
+                bool empty = true;
+                for (int j = 0; j < 28; j++)
+                    if (pixels[j][i] != 0)
+                        empty = false;
+                if (!empty)
+                {
+                    ret[3] = 27 - i;
+                    break;
+                }
+            }
+            return ret.ToList();
+        }
+
         public double[] GetInputData()
         {
             double[] ret = new double[28*28];
