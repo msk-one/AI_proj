@@ -6,6 +6,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using AI_proj.Models;
@@ -68,11 +69,27 @@ namespace AI_proj.Controllers
                 pixels[i] = new byte[image.Height];
                 for (int j = 0; j < image.Height; j++)
                 {
-                    var pixel = bitmap.GetPixel(i, j);
+                    var pixel = bitmap.GetPixel(j, i);
                     pixels[i][j] = pixel.A;
                 }
             }
-            
+            var newPixels = ImageCutter.CutImage(pixels);
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < newPixels.GetLength(0); i++)
+            {
+                for (int j = 0; j < newPixels[0].Length; j++)
+                {
+                    if (newPixels[i][j] == 0)
+                    {
+                        builder.Append('_');
+                    }
+                    else
+                    {
+                        builder.Append('O');
+                    }
+                }
+                builder.Append("\n");
+            }
             NeuralNet network = new NeuralNet(Server.MapPath(@"~/App_Data/digit_neuralnet"));
            // var output = network.Run(new double[] {1});
             var output = new double[] {1, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -85,7 +102,7 @@ namespace AI_proj.Controllers
                 }
             }
             DigitImage digit = new DigitImage(pixels, 255);
-            return Json(ret.ToArray());
+            return Json(builder.ToString());
         }
 
         Bitmap CreateImage(Bitmap original, int x, int y, int width, int height)

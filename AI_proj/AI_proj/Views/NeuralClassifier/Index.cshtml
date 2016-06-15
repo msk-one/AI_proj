@@ -1,6 +1,4 @@
-﻿@model AI_proj.Models.UploadImageModel
-
-@{
+﻿@{
     ViewBag.Title = "Neural Classifier";
 }
 @section AddToHead{
@@ -15,14 +13,6 @@
             @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <div id="canvasDiv"></div>
-                <!-- <img id="image_preview" src="@Url.Content("~/Content/default-placeholder.png")" alt="Image preview" />-->
-                @*<div class="form-group">
-                    @Html.LabelFor(model => model.File.FileName, new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        <input name="Image" type="file" id="image_input"/>
-                        @Html.ValidationMessageFor(model => model.File)
-                    </div>
-                </div>*@
                 <div class="form-group">
                 <div class="col-sm-offset-6 col-xs-6">
                     <input type="submit" value="Upload" class="btn btn-success"/>

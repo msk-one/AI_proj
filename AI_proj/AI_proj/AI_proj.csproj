@@ -189,6 +189,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="NeuralNetwork\DigitImage.cs" />
     <Compile Include="NeuralNetwork\DigitNeuralNetwork.cs" />
+    <Compile Include="NeuralNetwork\ImageCutter.cs" />
     <Compile Include="NeuralNetwork\XOR.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
