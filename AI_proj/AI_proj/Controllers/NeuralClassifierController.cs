@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using AI_proj.Models;
 using AI_proj.NeuralNetwork;
+using FANNCSharp.Double;
 
 namespace AI_proj.Controllers
 {
@@ -71,9 +72,20 @@ namespace AI_proj.Controllers
                     pixels[i][j] = pixel.A;
                 }
             }
-
+            
+            NeuralNet network = new NeuralNet(Server.MapPath(@"~/App_Data/digit_neuralnet"));
+           // var output = network.Run(new double[] {1});
+            var output = new double[] {1, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+            List<int> ret = new List<int>();
+            for (int i = 0; i < 10; i++)
+            {
+                if (output[i] > 0.9d)
+                {
+                    ret.Add(i);
+                }
+            }
             DigitImage digit = new DigitImage(pixels, 255);
-            return Json(pixels);
+            return Json(ret.ToArray());
         }
 
         Bitmap CreateImage(Bitmap original, int x, int y, int width, int height)
