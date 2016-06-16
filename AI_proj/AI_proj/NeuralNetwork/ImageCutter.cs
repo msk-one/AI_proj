@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 
@@ -63,7 +64,6 @@ namespace AI_proj.NeuralNetwork
             }
             return ret;
         }
-
         public static byte[][] MakeSquare(byte[][] pixels)
         {
             if (pixels.Length == pixels[0].Length)
@@ -132,6 +132,57 @@ namespace AI_proj.NeuralNetwork
                     ret[i][j] = list[i][j];
                 }
             }
+            return ret;
+        }
+
+        public static byte[][] Scale(byte[][] pixels)
+        {
+            var size = pixels.Length;
+            var ret = new byte[28][];
+            for(int i=0; i<28; i++)
+                ret[i] = new byte[28];
+            int blockSize = (int)Math.Ceiling(pixels.Length / 28f);
+            for(int i=0; i<28; i++)
+                for(int j=0; j<28; j++)
+                {
+                    int sum = 0;
+                    int count = 0;
+                    for(int x=0; x<blockSize; x++)
+                        for(int y=0; y<blockSize; y++)
+                        {
+                            if(i*blockSize + x < size && j* blockSize + y < size)
+                            {
+                                count++;
+                                sum += pixels[i * blockSize + x][j * blockSize + y];
+                            }
+                        }
+                    if (count == 0)
+                        ret[i][j] = 0;
+                    else
+                        ret[i][j] = (byte)(sum /count);
+                }
+            return ret;
+        }
+
+        public static byte[][] AddRows(byte[][] pixels)
+        {
+            int h = pixels.Length;
+            int w = pixels[0].Length;
+            int newH = (int)(h * 1.4);
+            byte[][] ret = new byte[newH][];
+            for(int i=0; i< newH; i++)
+            {
+                ret[i] = new byte[w];
+            }
+            int startY = (int)Math.Ceiling((newH - h) / 2.0);
+            for (int i = 0; i < newH; i++)
+                for (int j = 0; j < w; j++)
+                    ret[i][j] = 0;
+            for(int i= 0; i< h; i++)
+                for(int j=0; j< w; j++)
+                {
+                    ret[i + startY][j] = pixels[i][j];
+                }
             return ret;
         }
     }

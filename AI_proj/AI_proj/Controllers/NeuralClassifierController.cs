@@ -74,11 +74,11 @@ namespace AI_proj.Controllers
                 }
             }
             var newPixels = ImageCutter.CutImage(pixels);
+            newPixels = ImageCutter.AddRows(newPixels);
             newPixels = ImageCutter.MakeSquare(newPixels);
-   
-
+            var scaledPixels = ImageCutter.Scale(newPixels);
             //OD TAD JEST NIEUDANE SKALOWANIE
-            bitmap = new Bitmap(newPixels.Length, newPixels.Length, PixelFormat.Format24bppRgb);
+            /*bitmap = new Bitmap(newPixels.Length, newPixels.Length, PixelFormat.Format24bppRgb);
             for (int i = 0; i < newPixels.Length; i++)
             {
                 for (int j = 0; j < newPixels.Length; j++)
@@ -98,7 +98,7 @@ namespace AI_proj.Controllers
                     var p = scaledBitmap.GetPixel(i, j);
                     scaledPixels[i][j] = p.R;
                 }
-            }
+            }*/
             //StringBuilder builder = new StringBuilder();
             //builder.AppendLine(scaledPixels.Length + " " + scaledPixels[0].Length);
             //for (int i = 0; i < scaledPixels.GetLength(0); i++)
@@ -130,13 +130,10 @@ namespace AI_proj.Controllers
             }
             Debug.Write('}');
             var output = network.Run(digit.GetInputData());
-            List<int> ret = new List<int>();
+            List<string> ret = new List<string>();
             for (int i = 0; i < 10; i++)
             {
-                if (output[i] > 0.9d)
-                {
-                    ret.Add(i);
-                }
+                ret.Add(i.ToString() + " : " + output[i].ToString());
             }
             Debug.WriteLine(digit.ToString());
             return Json(ret.ToArray());
